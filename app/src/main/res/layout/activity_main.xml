@@ -4,8 +4,50 @@
     android:layout_height="match_parent" android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    android:paddingBottom="@dimen/activity_vertical_margin" tools:context=".MainActivity">
+    android:paddingBottom="@dimen/activity_vertical_margin" tools:context=".MainActivity"
+    android:background="@drawable/activity_main_background">
+    <ImageView
+        android:id="@+id/iv_logo"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:background="@drawable/logo"
+        android:layout_marginTop="30dp"
+        android:layout_alignParentTop="true"
+        android:layout_centerInParent="true"/>
+    <TextView
+        android:id="@+id/tv_login"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Log in"
+        android:textColor="#FFFFFFFF"
+        android:textSize="20sp"
+        android:textStyle="normal"
+        android:layout_centerInParent="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="20dp"/>
+    <Button
+        android:id="@+id/bt_signup"
+        android:layout_width="270dp"
+        android:layout_height="45dp"
+        android:text="Sign up"
+        android:textStyle="normal"
+        android:textAllCaps="false"
+        android:textColor="@color/lightBlue"
+        android:textSize="20sp"
+        android:background="@drawable/background_button_signup"
+        android:layout_centerInParent="true"
+        android:layout_above="@id/tv_login"
+        android:layout_marginBottom="20dp"/>
+    <TextView
+        android:id="@+id/tv_intro"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Welcome to Twitter Clone\n \nGet real-time updates about what matters to you."
+        android:textSize="20dp"
+        android:textColor="#FFFFFF"
+        android:gravity="center"
+        android:layout_centerInParent="true"
+        android:layout_above="@id/bt_signup"
+        android:layout_marginBottom="50dp"/>
 
-    <TextView android:text="Hello World!" android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
 </RelativeLayout>
