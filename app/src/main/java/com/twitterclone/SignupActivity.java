@@ -155,6 +155,7 @@ public class SignupActivity extends AppCompatActivity {
             SharedPreferences.Editor editor=preferences.edit();
             editor.remove("uid");
             editor.putInt("uid", uid);
+            editor.commit();
             Intent dashBoardIntent=new Intent(SignupActivity.this,DashBoardActivity.class);
             dashBoardIntent.putExtra("uid",uid);
             startActivity(dashBoardIntent);
