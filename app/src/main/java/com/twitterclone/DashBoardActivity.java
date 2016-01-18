@@ -15,7 +15,7 @@ import org.json.JSONObject;
 public class DashBoardActivity extends AppCompatActivity {
     android.support.v7.app.ActionBar actionBar;
     TextView textViewName,textViewPhone,textViewEmail;
-    int uid=0;
+    String authToken=null;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -23,24 +23,22 @@ public class DashBoardActivity extends AppCompatActivity {
         actionBar=getSupportActionBar();
         actionBar.show();
         Bundle b=getIntent().getExtras();
-        uid=b.getInt("uid");
+        authToken=b.getString("token");
+        Toast.makeText(getApplicationContext(),"Token: " + authToken,Toast.LENGTH_LONG).show();
 
         textViewName=(TextView)findViewById(R.id.tv_profile_name);
         textViewEmail=(TextView)findViewById(R.id.tv_profile_email);
         textViewPhone=(TextView)findViewById(R.id.tv_profile_phone);
-        if(uid==0){
-            Toast.makeText(getApplicationContext(),"Something went wrong. User can't found\nPlease try later !!!",Toast.LENGTH_LONG).show();
+        if(authToken==null){
+            Toast.makeText(getApplicationContext(),"Something went wrong. AuthToken can't found\nPlease try later !!!",Toast.LENGTH_LONG).show();
         }else{
-            new GetUserProfile((ApiUrls.profileURL+uid).toString()).execute();
+         //   new GetUserProfile().execute();
         }
     }
 
     class GetUserProfile extends AsyncTask<Void,Void,Void>{
-        String url,jsonString;
+        String jsonString;
         ProgressDialog dialog;
-        public GetUserProfile(String url) {
-            this.url=url;
-        }
 
         @Override
         protected void onPreExecute() {
@@ -54,7 +52,7 @@ public class DashBoardActivity extends AppCompatActivity {
         protected Void doInBackground(Void... params) {
             try{
                 JsonGetHandler jsonGetHandler=new JsonGetHandler();
-                jsonString=jsonGetHandler.requestJsonByUrl(url,JsonGetHandler.GET);
+                jsonString=jsonGetHandler.requestJsonByUrl((ApiUrls.profileURL).toString(),JsonGetHandler.GET);
             }catch (Exception e){
                 e.printStackTrace();
             }

@@ -24,7 +24,7 @@ import java.io.InputStream;
 public class MainActivity extends AppCompatActivity {
     SharedPreferences preferences=null;
     SharedPreferences.Editor editor;
-    int uid=0;
+    String authToken=null;
     Intent dashBoardIntent;
     Button buttonSignup;
     TextView textViewLogin;
@@ -39,11 +39,11 @@ public class MainActivity extends AppCompatActivity {
         textViewLogin=(TextView)findViewById(R.id.tv_login);
 
         preferences=getSharedPreferences("UserSession", MODE_PRIVATE);
-        uid=preferences.getInt("uid", 0);
+        authToken=preferences.getString("token", null);
 
-        if(uid!=0){
+        if(authToken!=null){
             dashBoardIntent=new Intent(MainActivity.this,DashBoardActivity.class);
-            dashBoardIntent.putExtra("uid",uid);
+            dashBoardIntent.putExtra("token",authToken);
             startActivity(dashBoardIntent);
             this.finish();
         }
@@ -56,7 +56,7 @@ public class MainActivity extends AppCompatActivity {
         textViewLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                startActivity(new Intent(MainActivity.this,LoginActivity.class));
             }
         });
     }

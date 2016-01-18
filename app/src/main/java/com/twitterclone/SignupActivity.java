@@ -26,6 +26,7 @@ public class SignupActivity extends AppCompatActivity {
     Button buttonSignup;
     SignupUserData signupUserData;
     String serverResponse;
+    String authToken=null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -142,29 +143,28 @@ public class SignupActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute(Void aVoid) {
             super.onPostExecute(aVoid);
-            int uid=0;
             dialog.hide();
-            Log.d("Server Response ::: ", serverResponse);
+            Log.d("Server Response ::: ", serverResponse + " ... Success !!!");
             try{
                 JSONObject object=new JSONObject(serverResponse.toString());
-                uid=object.getInt("id");
+                authToken=object.getString("auth_token");
             }catch (Exception e){
                 e.printStackTrace();
             }
             SharedPreferences preferences=getSharedPreferences("UserSession", MODE_PRIVATE);
             SharedPreferences.Editor editor=preferences.edit();
-            editor.remove("uid");
-            editor.putInt("uid", uid);
+            editor.remove("token");
+            editor.putString("token",authToken);
             editor.commit();
             Intent dashBoardIntent=new Intent(SignupActivity.this,DashBoardActivity.class);
-            dashBoardIntent.putExtra("uid",uid);
+            dashBoardIntent.putExtra("token",authToken);
             startActivity(dashBoardIntent);
 
             SignupActivity.this.finish();
         }
     }
 
-    public static String POST(String url, SignupUserData signupUserData){
+    public static String POST(String url, SignupUserData userData){
         InputStream inputStream = null;
         String result = "";
         try {
@@ -176,10 +176,10 @@ public class SignupActivity extends AppCompatActivity {
             String json = "";
 
             JSONObject jsonObject = new JSONObject();
-            jsonObject.accumulate("name", signupUserData.getName());
-            jsonObject.accumulate("email", signupUserData.getEmail());
-            jsonObject.accumulate("mobile_number", signupUserData.getPhone());
-            jsonObject.accumulate("password", signupUserData.getPassword());
+            jsonObject.accumulate("name",userData.getName());
+            jsonObject.accumulate("email",userData.getEmail());
+            jsonObject.accumulate("mobile_number",userData.getPhone());
+            jsonObject.accumulate("password",userData.getPassword());
 
             json = jsonObject.toString();
 
@@ -205,5 +205,4 @@ public class SignupActivity extends AppCompatActivity {
         }
         return result;
     }
-
 }

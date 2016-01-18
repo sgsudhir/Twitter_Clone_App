@@ -65,7 +65,8 @@
         android:hint="Phone Number"
         android:layout_above="@id/et_signup_email"
         android:layout_marginBottom="20dp"
-        android:inputType="phone"/>
+        android:inputType="phone"
+        android:maxLength="10" />
     <EditText
         android:id="@+id/et_signup_name"
         android:layout_width="match_parent"

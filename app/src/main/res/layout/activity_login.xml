@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:layout_height="match_parent" android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    tools:context="com.twitterclone.LoginActivity">
+    <ImageView
+        android:id="@+id/iv_logo"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:background="@drawable/logo"
+        android:layout_centerHorizontal="true"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Welcome to Twitter Clone\nLogin here"
+        android:gravity="center"
+        android:textColor="@color/lightBlue"
+        android:textSize="20sp"
+        android:layout_centerInParent="true"
+        android:layout_below="@id/iv_logo"
+        android:layout_marginTop="20dp"/>
+    <Button
+        android:id="@+id/bt_login_login"
+        android:layout_width="250dp"
+        android:layout_height="50dp"
+        android:background="@drawable/background_signup_button_signup"
+        android:text="Log in"
+        android:textColor="#FFFFFF"
+        android:textSize="20sp"
+        android:layout_centerInParent="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="20dp"/>
+    <EditText
+        android:id="@+id/et_login_password"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Password"
+        android:layout_above="@id/bt_login_login"
+        android:layout_marginBottom="20dp"
+        android:inputType="textPassword"/>
+    <EditText
+        android:id="@+id/et_login_login_with"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Email/Mobile"
+        android:layout_above="@id/et_login_password"
+        android:layout_marginBottom="20dp"
+        android:inputType="textEmailAddress"/>
+</RelativeLayout>
