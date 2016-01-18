@@ -2,6 +2,8 @@ package com.twitterclone;
 
 import android.app.ActionBar;
 import android.app.ProgressDialog;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -95,7 +97,12 @@ public class DashBoardActivity extends AppCompatActivity {
         }if (id==R.id.action_users){
 
         }if (id==R.id.action_logout){
-
+            SharedPreferences preferences=getSharedPreferences("UserSession", MODE_PRIVATE);
+            SharedPreferences.Editor editor=preferences.edit();
+            editor.remove("token");
+            editor.commit();
+            startActivity(new Intent(DashBoardActivity.this, MainActivity.class));
+            DashBoardActivity.this.finish();
         }
         return super.onOptionsItemSelected(item);
     }
