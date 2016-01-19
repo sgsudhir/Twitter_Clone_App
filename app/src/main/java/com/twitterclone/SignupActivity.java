@@ -27,6 +27,7 @@ public class SignupActivity extends AppCompatActivity {
     SignupUserData signupUserData;
     String serverResponse;
     String authToken=null;
+    int uid=0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -148,16 +149,20 @@ public class SignupActivity extends AppCompatActivity {
             try{
                 JSONObject object=new JSONObject(serverResponse.toString());
                 authToken=object.getString("auth_token");
+                uid= object.getInt("id");
             }catch (Exception e){
                 e.printStackTrace();
             }
             SharedPreferences preferences=getSharedPreferences("UserSession", MODE_PRIVATE);
             SharedPreferences.Editor editor=preferences.edit();
             editor.remove("token");
-            editor.putString("token",authToken);
+            editor.remove("uid");
+            editor.putString("token", authToken);
+            editor.putInt("uid",uid);
             editor.commit();
             Intent dashBoardIntent=new Intent(SignupActivity.this,DashBoardActivity.class);
             dashBoardIntent.putExtra("token",authToken);
+            dashBoardIntent.putExtra("uid",uid);
             startActivity(dashBoardIntent);
 
             SignupActivity.this.finish();

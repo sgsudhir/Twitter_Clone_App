@@ -28,6 +28,7 @@ public class MainActivity extends AppCompatActivity {
     Intent dashBoardIntent;
     Button buttonSignup;
     TextView textViewLogin;
+    int uid=0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,10 +41,12 @@ public class MainActivity extends AppCompatActivity {
 
         preferences=getSharedPreferences("UserSession", MODE_PRIVATE);
         authToken=preferences.getString("token", null);
+        uid=preferences.getInt("uid",0);
 
-        if(authToken!=null){
+        if(authToken!=null && uid!=0){
             dashBoardIntent=new Intent(MainActivity.this,DashBoardActivity.class);
             dashBoardIntent.putExtra("token",authToken);
+            dashBoardIntent.putExtra("uid",uid);
             startActivity(dashBoardIntent);
             this.finish();
         }

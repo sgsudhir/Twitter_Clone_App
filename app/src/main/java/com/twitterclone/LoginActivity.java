@@ -26,6 +26,7 @@ public class LoginActivity extends AppCompatActivity {
     String serverResponse;
     LoginUserData loginUserData;
     String authToken=null;
+    int uid=0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,16 +73,20 @@ public class LoginActivity extends AppCompatActivity {
             try{
                 JSONObject object=new JSONObject(serverResponse.toString());
                 authToken=object.getString("auth_token");
+                uid=object.getInt("id");
             }catch (Exception e){
                 e.printStackTrace();
             }
             SharedPreferences preferences=getSharedPreferences("UserSession", MODE_PRIVATE);
             SharedPreferences.Editor editor=preferences.edit();
             editor.remove("token");
+            editor.remove("uid");
             editor.putString("token",authToken);
+            editor.putInt("uid",uid);
             editor.commit();
             Intent dashBoardIntent=new Intent(LoginActivity.this,DashBoardActivity.class);
             dashBoardIntent.putExtra("token", authToken);
+            dashBoardIntent.putExtra("uid",uid);
             startActivity(dashBoardIntent);
 
             LoginActivity.this.finish();

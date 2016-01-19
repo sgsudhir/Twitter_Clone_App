@@ -7,6 +7,7 @@ import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
@@ -18,6 +19,7 @@ public class DashBoardActivity extends AppCompatActivity {
     android.support.v7.app.ActionBar actionBar;
     TextView textViewName,textViewPhone,textViewEmail;
     String authToken=null;
+    int uid=0;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -26,15 +28,16 @@ public class DashBoardActivity extends AppCompatActivity {
         actionBar.show();
         Bundle b=getIntent().getExtras();
         authToken=b.getString("token");
-        Toast.makeText(getApplicationContext(),"Token: " + authToken,Toast.LENGTH_LONG).show();
+        uid=b.getInt("uid");
+        Toast.makeText(getApplicationContext(),"Token: " + authToken + "| UID: " + uid, Toast.LENGTH_LONG).show();
 
         textViewName=(TextView)findViewById(R.id.tv_profile_name);
         textViewEmail=(TextView)findViewById(R.id.tv_profile_email);
         textViewPhone=(TextView)findViewById(R.id.tv_profile_phone);
-        if(authToken==null){
-            Toast.makeText(getApplicationContext(),"Something went wrong. AuthToken can't found\nPlease try later !!!",Toast.LENGTH_LONG).show();
+        if(authToken==null || uid==0){
+            Toast.makeText(getApplicationContext(),"Something went wrong.\nPlease try later !!!",Toast.LENGTH_LONG).show();
         }else{
-         //   new GetUserProfile().execute();
+            new GetUserProfile().execute();
         }
     }
 
@@ -54,7 +57,9 @@ public class DashBoardActivity extends AppCompatActivity {
         protected Void doInBackground(Void... params) {
             try{
                 JsonGetHandler jsonGetHandler=new JsonGetHandler();
-                jsonString=jsonGetHandler.requestJsonByUrl((ApiUrls.profileURL).toString(),JsonGetHandler.GET);
+                Log.d("URL : ", ApiUrls.profileURL + uid);
+                jsonString=jsonGetHandler.requestJsonByUrl((ApiUrls.profileURL+uid).toString(),JsonGetHandler.GET,authToken);
+                Log.d("JSON: ",jsonString);
             }catch (Exception e){
                 e.printStackTrace();
             }
@@ -100,6 +105,7 @@ public class DashBoardActivity extends AppCompatActivity {
             SharedPreferences preferences=getSharedPreferences("UserSession", MODE_PRIVATE);
             SharedPreferences.Editor editor=preferences.edit();
             editor.remove("token");
+            editor.remove("uid");
             editor.commit();
             startActivity(new Intent(DashBoardActivity.this, MainActivity.class));
             DashBoardActivity.this.finish();

@@ -30,8 +30,8 @@ public class JsonGetHandler {
      * @url - url to make request
      * @method - http request method
      * */
-    public String requestJsonByUrl(String url, int method) {
-        return this.requestJsonByUrl(url, method, null);
+    public String requestJsonByUrl(String url, int method,String authToken) {
+        return this.requestJsonByUrl(url, method, null,authToken);
     }
 
     /*
@@ -41,7 +41,7 @@ public class JsonGetHandler {
      * @params - http request params
      * */
     public String requestJsonByUrl(String url, int method,
-                                   List<NameValuePair> params) {
+                                   List<NameValuePair> params,String authToken) {
         try {
             // http client
             DefaultHttpClient httpClient = new DefaultHttpClient();
@@ -66,6 +66,9 @@ public class JsonGetHandler {
                     url += "?" + paramString;
                 }
                 HttpGet httpGet = new HttpGet(url);
+                httpGet.setHeader("Accept", "application/json");
+                httpGet.setHeader("Content-type", "application/json");
+                httpGet.setHeader("Authorization","Token token=" + authToken);
 
                 httpResponse = httpClient.execute(httpGet);
 
