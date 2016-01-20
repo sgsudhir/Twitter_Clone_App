@@ -23,6 +23,9 @@
         </activity>
         <activity android:name=".LoginActivity" >
         </activity>
+        <activity android:name=".EditUserActivity"
+            android:parentActivityName=".DashBoardActivity">
+        </activity>
     </application>
 
 </manifest>

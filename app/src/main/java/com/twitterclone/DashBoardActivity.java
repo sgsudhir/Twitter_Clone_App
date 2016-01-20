@@ -18,6 +18,7 @@ import org.json.JSONObject;
 public class DashBoardActivity extends AppCompatActivity {
     android.support.v7.app.ActionBar actionBar;
     TextView textViewName,textViewPhone,textViewEmail;
+    String name,email,phone;
     String authToken=null;
     int uid=0;
     @Override
@@ -76,6 +77,9 @@ public class DashBoardActivity extends AppCompatActivity {
                 textViewName.setText(object.getString("name"));
                 textViewEmail.setText(object.getString("email"));
                 textViewPhone.setText(object.getString("mobile_number"));
+                name=object.getString("name");
+                email=object.getString("email");
+                phone=object.getString("mobile_number");
             }catch (Exception e){
                 e.printStackTrace();
             }
@@ -95,7 +99,15 @@ public class DashBoardActivity extends AppCompatActivity {
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
-        if (id == R.id.action_settings) {
+        if (id == R.id.action_edit_user) {
+            Intent editUserIntent=new Intent(DashBoardActivity.this,EditUserActivity.class);
+            editUserIntent.putExtra("token", authToken);
+            editUserIntent.putExtra("uid",uid);
+            editUserIntent.putExtra("name",name);
+            editUserIntent.putExtra("email",email);
+            editUserIntent.putExtra("phone",phone);
+            startActivity(editUserIntent);
+            DashBoardActivity.this.finish();
             return true;
         }if (id==R.id.action_home){
 
