@@ -36,7 +36,9 @@ public class DashBoardActivity extends AppCompatActivity {
         textViewEmail=(TextView)findViewById(R.id.tv_profile_email);
         textViewPhone=(TextView)findViewById(R.id.tv_profile_phone);
         if(authToken==null || uid==0){
-            Toast.makeText(getApplicationContext(),"Something went wrong.\nPlease try later !!!",Toast.LENGTH_LONG).show();
+            Toast.makeText(getApplicationContext(),"Session invalid. Login Again ...",Toast.LENGTH_LONG).show();
+            startActivity(new Intent(DashBoardActivity.this,MainActivity.class));
+            finish();
         }else{
             new GetUserProfile().execute();
         }
